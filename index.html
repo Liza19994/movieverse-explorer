@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Assignment 4 - Movie Navigation Visualisation</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#0f172a;
+  color:#111827;
+}
+.screen{display:none; padding:24px; min-height:100vh}
+.screen.active{display:block}
+
+.header{
+  background:linear-gradient(135deg,#1e3a8a,#7c3aed);
+  color:white;
+  padding:24px;
+  border-radius:20px;
+  text-align:center;
+  margin-bottom:20px;
+}
+.panel{
+  background:#f8fafc;
+  border-radius:18px;
+  padding:20px;
+  margin-bottom:18px;
+}
+h1,h2,h3{text-align:center}
+.nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:center;
+  margin-bottom:15px;
+}
+button{
+  border:none;
+  border-radius:999px;
+  padding:11px 16px;
+  background:#2563eb;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+button:hover{background:#1d4ed8}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
+  gap:14px;
+}
+.movie{
+  height:210px;
+  border-radius:16px;
+  cursor:pointer;
+  overflow:hidden;
+  position:relative;
+  transition:.2s;
+  background:#111827;
+  box-shadow:0 6px 14px rgba(0,0,0,.25);
+}
+.movie:hover{
+  transform:scale(1.05);
+  outline:4px solid #facc15;
+}
+.poster-art{
+  height:100%;
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-size:38px;
+  font-weight:bold;
+}
+.movie-overlay{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  background:linear-gradient(to top, rgba(0,0,0,.96), rgba(0,0,0,.1));
+  color:white;
+  padding:10px;
+}
+.movie-title{font-size:12px;font-weight:bold}
+.movie-meta{font-size:10px;opacity:.95}
+
+.action{background:linear-gradient(135deg,#7f1d1d,#dc2626)}
+.drama{background:linear-gradient(135deg,#581c87,#9333ea)}
+.scifi{background:linear-gradient(135deg,#1e3a8a,#2563eb)}
+.horror{background:linear-gradient(135deg,#020617,#334155)}
+.animation{background:linear-gradient(135deg,#14532d,#16a34a)}
+.comedy{background:linear-gradient(135deg,#9a3412,#f97316)}
+
+.cluster-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:18px;
+}
+.cluster{
+  color:white;
+  padding:32px;
+  border-radius:24px;
+  text-align:center;
+  cursor:pointer;
+  font-size:22px;
+  font-weight:bold;
+}
+.cluster small{display:block;font-size:14px;margin-top:8px}
+
+.timeline{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+}
+.decade{
+  flex:1;
+  padding:30px 10px;
+  border-radius:20px;
+  background:#dbeafe;
+  text-align:center;
+  font-weight:bold;
+  cursor:pointer;
+}
+.decade:hover{background:#1e40af;color:white}
+
+.map{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:16px;
+}
+.country{
+  background:#dbeafe;
+  border-radius:20px;
+  padding:35px;
+  text-align:center;
+  cursor:pointer;
+  font-weight:bold;
+}
+.country:hover{background:#1e40af;color:white}
+
+.density{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  gap:25px;
+}
+.bubble{
+  border-radius:50%;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.detail-layout{
+  display:grid;
+  grid-template-columns:300px 1fr;
+  gap:20px;
+}
+.poster{
+  height:430px;
+  border-radius:24px;
+  overflow:hidden;
+  background:#111827;
+  color:white;
+}
+.info-box{
+  background:white;
+  border-radius:18px;
+  padding:20px;
+}
+.related{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:12px;
+}
+.explanation{
+  line-height:1.7;
+  text-align:justify;
+}
+</style>
+</head>
+
+<body>
+
+<div id="home" class="screen active">
+  <div class="header">
+    <h1>MovieVerse Explorer</h1>
+    <p>Interactive Navigation Visualisation for 100 Movie Objects</p>
+  </div>
+
+  <div class="nav">
+    <button onclick="go('genres')">Explore by Genre</button>
+    <button onclick="go('timeline')">Explore Timeline</button>
+    <button onclick="go('map')">Explore by Country</button>
+    <button onclick="go('density')">View Density</button>
+    <button onclick="go('allMovies')">View All 100 Movies</button>
+  </div>
+
+  <div class="panel">
+    <h2>Collection Overview</h2>
+    <p class="explanation">
+      This prototype demonstrates a visual navigation system for 100 movie objects. Users can move between an overview,
+      genre clusters, timeline navigation, country-based navigation, density view, and individual movie detail pages.
+      This supports selection, movement between objects, and group identification.
+    </p>
+  </div>
+
+  <div class="panel">
+    <h2>Main Navigation Choices</h2>
+    <div class="cluster-grid">
+      <div class="cluster action" onclick="go('genres')">Genre Clusters<small>Group movies visually</small></div>
+      <div class="cluster scifi" onclick="go('timeline')">Timeline<small>Browse by decade</small></div>
+      <div class="cluster animation" onclick="go('map')">Country Map<small>Browse by origin</small></div>
+      <div class="cluster comedy" onclick="go('density')">Density View<small>See subgroup size</small></div>
+    </div>
+  </div>
+</div>
+
+<div id="genres" class="screen">
+  <div class="header"><h1>Genre Cluster Navigation</h1></div>
+  <div class="nav"><button onclick="go('home')">Home</button></div>
+  <div class="panel">
+    <h2>Choose a Genre Cluster</h2>
+    <div class="cluster-grid" id="genreClusters"></div>
+  </div>
+</div>
+
+<div id="timeline" class="screen">
+  <div class="header"><h1>Timeline Navigation</h1></div>
+  <div class="nav"><button onclick="go('home')">Home</button></div>
+
+  <div class="panel">
+    <h2>Browse Movies by Decade</h2>
+    <div class="timeline">
+      <div class="decade" onclick="showDecade(1980)">1980s</div>
+      <div class="decade" onclick="showDecade(1990)">1990s</div>
+      <div class="decade" onclick="showDecade(2000)">2000s</div>
+      <div class="decade" onclick="showDecade(2010)">2010s</div>
+      <div class="decade" onclick="showDecade(2020)">2020s</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2 id="timelineTitle">Select a decade</h2>
+    <div class="grid" id="timelineGrid"></div>
+  </div>
+</div>
+
+<div id="map" class="screen">
+  <div class="header"><h1>Country / Map-Based Navigation</h1></div>
+  <div class="nav"><button onclick="go('home')">Home</button></div>
+
+  <div class="panel">
+    <h2>Select a Country</h2>
+    <div class="map">
+      <div class="country" onclick="showCountry('USA')">USA</div>
+      <div class="country" onclick="showCountry('UK')">UK</div>
+      <div class="country" onclick="showCountry('India')">India</div>
+      <div class="country" onclick="showCountry('Korea')">Korea</div>
+      <div class="country" onclick="showCountry('Japan')">Japan</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2 id="countryTitle">Select a country</h2>
+    <div class="grid" id="countryGrid"></div>
+  </div>
+</div>
+
+<div id="density" class="screen">
+  <div class="header"><h1>Object Density View</h1></div>
+  <div class="nav"><button onclick="go('home')">Home</button></div>
+  <div class="panel">
+    <h2>Genre Density</h2>
+    <p style="text-align:center;">Bigger bubbles represent genres with more movies.</p>
+    <div class="density" id="densityBubbles"></div>
+  </div>
+</div>
+
+<div id="allMovies" class="screen">
+  <div class="header"><h1>All 100 Movie Objects</h1></div>
+  <div class="nav"><button onclick="go('home')">Home</button></div>
+  <div class="panel">
+    <h2 id="allTitle">Overview Grid</h2>
+    <div class="grid" id="allGrid"></div>
+  </div>
+</div>
+
+<div id="detail" class="screen">
+  <div class="header"><h1>Movie Detail and Related Navigation</h1></div>
+  <div class="nav">
+    <button onclick="go('home')">Home</button>
+    <button onclick="go(previousScreen)">Back to Previous View</button>
+  </div>
+
+  <div class="panel detail-layout">
+    <div id="detailPoster" class="poster"></div>
+    <div class="info-box">
+      <h2 id="detailTitle"></h2>
+      <p id="detailInfo"></p>
+      <h3>Related Movies</h3>
+      <div class="related" id="relatedMovies"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const genres = ["Action","Drama","Sci-Fi","Horror","Animation","Comedy"];
+const countries = ["USA","UK","India","Korea","Japan"];
+const classMap = {
+  "Action":"action",
+  "Drama":"drama",
+  "Sci-Fi":"scifi",
+  "Horror":"horror",
+  "Animation":"animation",
+  "Comedy":"comedy"
+};
+const icons = {
+  "Action":"🔥",
+  "Drama":"🎭",
+  "Sci-Fi":"🚀",
+  "Horror":"👻",
+  "Animation":"🌈",
+  "Comedy":"😂"
+};
+
+let movies = [];
+let previousScreen = "home";
+
+for(let i=1;i<=100;i++){
+  let genre = genres[i % genres.length];
+  let country = countries[i % countries.length];
+  let year = 1980 + (i % 45);
+
+  movies.push({
+    id:i,
+    title:"Movie " + String(i).padStart(3,"0"),
+    genre,
+    country,
+    year,
+    rating:(6+(i%35)/10).toFixed(1),
+    popularity:50+(i%50)
+  });
+}
+
+function go(id){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+function movieCard(m){
+  let d=document.createElement("div");
+  d.className="movie";
+  d.onclick=()=>openDetail(m);
+
+  d.innerHTML=`
+    <div class="poster-art ${classMap[m.genre]}">${icons[m.genre]}</div>
+    <div class="movie-overlay">
+      <div class="movie-title">${m.title}</div>
+      <div class="movie-meta">
+        ${m.genre}<br>${m.year}<br>${m.country}<br>⭐ ${m.rating}
+      </div>
+    </div>
+  `;
+  return d;
+}
+
+function openDetail(m){
+  previousScreen = document.querySelector(".screen.active").id;
+  go("detail");
+
+  document.getElementById("detailPoster").innerHTML = `
+    <div class="poster-art ${classMap[m.genre]}" style="font-size:90px; height:100%;">
+      ${icons[m.genre]}
+    </div>
+  `;
+
+  document.getElementById("detailTitle").innerText=m.title;
+  document.getElementById("detailInfo").innerHTML=`
+    <b>Genre:</b> ${m.genre}<br>
+    <b>Year:</b> ${m.year}<br>
+    <b>Country:</b> ${m.country}<br>
+    <b>Rating:</b> ${m.rating}<br>
+    <b>Popularity:</b> ${m.popularity}<br><br>
+    This detail page allows users to move from one movie object to related movies.
+  `;
+
+  let related = movies.filter(x=>x.genre===m.genre && x.id!==m.id).slice(0,5);
+  let box=document.getElementById("relatedMovies");
+  box.innerHTML="";
+  related.forEach(r=>box.appendChild(movieCard(r)));
+}
+
+function buildGenres(){
+  let box=document.getElementById("genreClusters");
+  box.innerHTML="";
+  genres.forEach(g=>{
+    let count=movies.filter(m=>m.genre===g).length;
+    let div=document.createElement("div");
+    div.className="cluster "+classMap[g];
+    div.innerHTML=`${icons[g]} ${g}<small>${count} movies</small>`;
+    div.onclick=()=>showGenre(g);
+    box.appendChild(div);
+  });
+}
+
+function showGenre(g){
+  go("allMovies");
+  document.getElementById("allTitle").innerText=g+" Movies Cluster";
+  let list=movies.filter(m=>m.genre===g);
+  renderGrid("allGrid",list);
+}
+
+function showDecade(decade){
+  let list=movies.filter(m=>m.year>=decade && m.year<decade+10);
+  document.getElementById("timelineTitle").innerText=decade+"s Movies ("+list.length+")";
+  renderGrid("timelineGrid",list);
+}
+
+function showCountry(country){
+  let list=movies.filter(m=>m.country===country);
+  document.getElementById("countryTitle").innerText=country+" Movies ("+list.length+")";
+  renderGrid("countryGrid",list);
+}
+
+function renderGrid(id,list){
+  let grid=document.getElementById(id);
+  grid.innerHTML="";
+  list.forEach(m=>grid.appendChild(movieCard(m)));
+}
+
+function buildDensity(){
+  let box=document.getElementById("densityBubbles");
+  box.innerHTML="";
+  genres.forEach(g=>{
+    let count=movies.filter(m=>m.genre===g).length;
+    let size=95+(count*5);
+    let b=document.createElement("div");
+    b.className="bubble "+classMap[g];
+    b.style.width=size+"px";
+    b.style.height=size+"px";
+    b.innerHTML=`${icons[g]}<br>${g}<br>${count}`;
+    b.onclick=()=>showGenre(g);
+    box.appendChild(b);
+  });
+}
+
+buildGenres();
+renderGrid("allGrid",movies);
+buildDensity();
+</script>
+
+</body>
+</html>
