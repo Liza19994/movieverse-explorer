@@ -5,189 +5,897 @@
 <title>MovieVerse Explorer</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:#0f172a;color:white}
-.screen{display:none;padding:24px;min-height:100vh}
-.screen.active{display:block}
-.header{background:linear-gradient(135deg,#1e3a8a,#7c3aed);padding:28px;border-radius:24px;text-align:center;margin-bottom:24px}
-.header h1{font-size:36px;margin-bottom:8px}
-.header p{color:#dbeafe}
-.nav{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:22px}
-button{border:none;padding:12px 18px;border-radius:999px;background:#2563eb;color:white;font-weight:bold;cursor:pointer}
-button:hover{background:#1d4ed8}
-.panel{background:#111827;padding:24px;border-radius:22px;margin-bottom:24px}
-.home-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
-.home-card{padding:35px;border-radius:24px;cursor:pointer;text-align:center;min-height:150px;display:flex;flex-direction:column;justify-content:center;transition:.2s}
-.home-card:hover{transform:translateY(-5px);outline:4px solid #facc15}
-.home-card strong{font-size:24px;margin-bottom:10px}
-.action{background:linear-gradient(135deg,#991b1b,#ef4444)}
-.drama{background:linear-gradient(135deg,#581c87,#9333ea)}
-.scifi{background:linear-gradient(135deg,#1e3a8a,#3b82f6)}
-.horror{background:linear-gradient(135deg,#020617,#334155)}
-.animation{background:linear-gradient(135deg,#14532d,#22c55e)}
-.comedy{background:linear-gradient(135deg,#9a3412,#fb923c)}
-.gold{background:linear-gradient(135deg,#92400e,#facc15)}
-.green{background:linear-gradient(135deg,#064e3b,#10b981)}
-.pink{background:linear-gradient(135deg,#831843,#ec4899)}
-.cyan{background:linear-gradient(135deg,#164e63,#06b6d4)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:18px}
-.movie{background:#1e293b;border-radius:18px;overflow:hidden;cursor:pointer;transition:.2s;box-shadow:0 6px 15px rgba(0,0,0,.3)}
-.movie:hover{transform:scale(1.05);outline:4px solid #facc15}
-.poster{height:260px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;color:white}
-.poster-title{font-size:18px;font-weight:bold;line-height:1.15}
-.poster-country{font-size:42px;text-align:right}
-.poster-genre{font-size:13px;background:rgba(0,0,0,.35);padding:6px;border-radius:10px}
-.movie-info{padding:12px}
-.movie-title{font-size:14px;font-weight:bold;margin-bottom:6px}
-.movie-meta{font-size:12px;color:#cbd5e1;line-height:1.45}
-.search-box{width:100%;padding:14px;border:none;border-radius:14px;font-size:16px;margin-bottom:20px}
-.timeline,.country-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px}
-.box-btn{padding:35px;border-radius:20px;background:#1e293b;text-align:center;font-weight:bold;cursor:pointer}
-.box-btn:hover{background:#2563eb}
-.detail-layout{display:grid;grid-template-columns:330px 1fr;gap:24px}
-.detail-poster{height:480px;border-radius:24px;overflow:hidden}
-.info-box{background:#1e293b;padding:24px;border-radius:22px}
-.related{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-top:18px}
-.related .poster{height:170px}
-.related .poster-title{font-size:12px}
-.density{display:flex;flex-wrap:wrap;gap:28px;justify-content:center;align-items:center}
-.bubble{border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:bold;cursor:pointer;color:white}
-.bubble:hover{outline:4px solid #facc15}
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
+body{
+font-family:Arial,sans-serif;
+background:#0f172a;
+color:white;
+}
+
+.screen{
+display:none;
+padding:24px;
+min-height:100vh;
+}
+
+.screen.active{
+display:block;
+}
+
+.header{
+background:linear-gradient(135deg,#1e3a8a,#7c3aed);
+padding:28px;
+border-radius:24px;
+text-align:center;
+margin-bottom:24px;
+}
+
+.header h1{
+font-size:38px;
+margin-bottom:10px;
+}
+
+.header p{
+color:#dbeafe;
+}
+
+.nav{
+display:flex;
+gap:12px;
+justify-content:center;
+margin-bottom:22px;
+flex-wrap:wrap;
+}
+
+button{
+border:none;
+padding:12px 18px;
+border-radius:999px;
+background:#2563eb;
+color:white;
+font-weight:bold;
+cursor:pointer;
+font-size:14px;
+}
+
+button:hover{
+background:#1d4ed8;
+}
+
+.panel{
+background:#111827;
+padding:24px;
+border-radius:22px;
+margin-bottom:24px;
+}
+
+.home-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:18px;
+}
+
+.home-card{
+padding:34px;
+border-radius:24px;
+cursor:pointer;
+min-height:160px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+text-align:center;
+transition:.2s;
+}
+
+.home-card:hover{
+transform:translateY(-5px);
+outline:4px solid #facc15;
+}
+
+.home-card strong{
+font-size:24px;
+margin-bottom:10px;
+}
+
+.action{
+background:linear-gradient(135deg,#991b1b,#ef4444);
+}
+
+.drama{
+background:linear-gradient(135deg,#581c87,#9333ea);
+}
+
+.scifi{
+background:linear-gradient(135deg,#1e3a8a,#3b82f6);
+}
+
+.horror{
+background:linear-gradient(135deg,#020617,#334155);
+}
+
+.animation{
+background:linear-gradient(135deg,#14532d,#22c55e);
+}
+
+.comedy{
+background:linear-gradient(135deg,#9a3412,#fb923c);
+}
+
+.gold{
+background:linear-gradient(135deg,#92400e,#facc15);
+}
+
+.green{
+background:linear-gradient(135deg,#064e3b,#10b981);
+}
+
+.pink{
+background:linear-gradient(135deg,#831843,#ec4899);
+}
+
+.cyan{
+background:linear-gradient(135deg,#164e63,#06b6d4);
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+gap:18px;
+}
+
+.movie{
+background:#1e293b;
+border-radius:18px;
+overflow:hidden;
+cursor:pointer;
+transition:.2s;
+box-shadow:0 6px 15px rgba(0,0,0,.3);
+}
+
+.movie:hover{
+transform:scale(1.05);
+outline:4px solid #facc15;
+}
+
+.poster{
+height:270px;
+padding:16px;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+color:white;
+}
+
+.poster-country{
+font-size:28px;
+text-align:right;
+font-weight:bold;
+}
+
+.poster-title{
+font-size:20px;
+font-weight:bold;
+line-height:1.2;
+}
+
+.poster-genre{
+font-size:13px;
+background:rgba(0,0,0,.35);
+padding:6px;
+border-radius:10px;
+}
+
+.movie-info{
+padding:12px;
+}
+
+.movie-title{
+font-size:14px;
+font-weight:bold;
+margin-bottom:6px;
+}
+
+.movie-meta{
+font-size:12px;
+color:#cbd5e1;
+line-height:1.5;
+}
+
+.search-box{
+width:100%;
+padding:14px;
+border:none;
+border-radius:14px;
+font-size:16px;
+margin-bottom:20px;
+}
+
+.timeline,
+.country-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+gap:16px;
+}
+
+.box-btn{
+padding:34px;
+border-radius:20px;
+background:#1e293b;
+text-align:center;
+font-weight:bold;
+cursor:pointer;
+transition:.2s;
+}
+
+.box-btn:hover{
+background:#2563eb;
+transform:scale(1.03);
+}
+
+.detail-layout{
+display:grid;
+grid-template-columns:330px 1fr;
+gap:24px;
+}
+
+.detail-poster{
+height:500px;
+border-radius:24px;
+overflow:hidden;
+}
+
+.info-box{
+background:#1e293b;
+padding:24px;
+border-radius:22px;
+}
+
+.related{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+gap:12px;
+margin-top:18px;
+}
+
+.related .poster{
+height:180px;
+}
+
+.related .poster-title{
+font-size:12px;
+}
+
+.density{
+display:flex;
+flex-wrap:wrap;
+gap:28px;
+justify-content:center;
+align-items:center;
+}
+
+.bubble{
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+font-weight:bold;
+cursor:pointer;
+color:white;
+padding:12px;
+}
+
+.bubble:hover{
+outline:4px solid #facc15;
+}
+
 </style>
 </head>
 
 <body>
 
 <div id="home" class="screen active">
-  <div class="header">
-    <h1>MovieVerse Explorer</h1>
-    <p>Interactive Navigation Visualisation for 100 Movie Objects</p>
-  </div>
 
-  <div class="panel">
-    <div class="home-grid">
-      <div class="home-card action" onclick="go('genres')"><strong>Browse by Genre</strong><span>Explore movie clusters</span></div>
-      <div class="home-card scifi" onclick="go('timeline')"><strong>Timeline Navigation</strong><span>Browse by decade</span></div>
-      <div class="home-card animation" onclick="go('countries')"><strong>Films by Country</strong><span>Explore India, Korea, UK, USA, Bangladesh, Japan</span></div>
-      <div class="home-card pink" onclick="go('languages')"><strong>Browse by Language</strong><span>Hindi, Korean, English, Bangla, Japanese</span></div>
-      <div class="home-card comedy" onclick="showPopular()"><strong>New & Popular</strong><span>High-rated and recent movies</span></div>
-      <div class="home-card gold" onclick="showMyList()"><strong>My List</strong><span>Saved favourites</span></div>
-      <div class="home-card green" onclick="go('density')"><strong>Density View</strong><span>Subgroup size visualisation</span></div>
-      <div class="home-card cyan" onclick="showAllMovies()"><strong>All 100 Movies</strong><span>Overview-to-detail navigation</span></div>
-    </div>
-  </div>
+<div class="header">
+<h1>MovieVerse Explorer</h1>
+<p>Interactive Navigation Visualisation for 100 Movie Objects</p>
+</div>
+
+<div class="panel">
+
+<div class="home-grid">
+
+<div class="home-card action" onclick="go('genres')">
+<strong>Browse by Genre</strong>
+<span>Explore movie genre clusters</span>
+</div>
+
+<div class="home-card scifi" onclick="go('timeline')">
+<strong>Timeline Navigation</strong>
+<span>Browse by decade</span>
+</div>
+
+<div class="home-card animation" onclick="go('countries')">
+<strong>Films by Country</strong>
+<span>Explore global cinema collections</span>
+</div>
+
+<div class="home-card pink" onclick="go('languages')">
+<strong>Browse by Language</strong>
+<span>Hindi, Korean, Bangla, English, Japanese</span>
+</div>
+
+<div class="home-card comedy" onclick="showPopular()">
+<strong>New & Popular</strong>
+<span>Recently released and trending films</span>
+</div>
+
+<div class="home-card gold" onclick="showMyList()">
+<strong>My List</strong>
+<span>Saved favourite movies</span>
+</div>
+
+<div class="home-card green" onclick="go('density')">
+<strong>Density View</strong>
+<span>Visual subgroup size comparison</span>
+</div>
+
+<div class="home-card cyan" onclick="showAllMovies()">
+<strong>All 100 Movies</strong>
+<span>Overview-to-detail exploration</span>
+</div>
+
+</div>
+
+</div>
+
 </div>
 
 <div id="genres" class="screen">
-  <div class="header"><h1>Browse by Genre</h1></div>
-  <div class="nav"><button onclick="go('home')">Home</button></div>
-  <div class="panel"><div class="country-grid" id="genreGrid"></div></div>
+
+<div class="header">
+<h1>Browse by Genre</h1>
+</div>
+
+<div class="nav">
+<button onclick="go('home')">Home</button>
+</div>
+
+<div class="panel">
+<div class="country-grid" id="genreGrid"></div>
+</div>
+
 </div>
 
 <div id="timeline" class="screen">
-  <div class="header"><h1>Timeline Navigation</h1></div>
-  <div class="nav"><button onclick="go('home')">Home</button></div>
-  <div class="panel">
-    <div class="timeline">
-      <div class="box-btn" onclick="showDecade(1950)">1950s</div>
-      <div class="box-btn" onclick="showDecade(1970)">1970s</div>
-      <div class="box-btn" onclick="showDecade(1990)">1990s</div>
-      <div class="box-btn" onclick="showDecade(2000)">2000s</div>
-      <div class="box-btn" onclick="showDecade(2010)">2010s</div>
-      <div class="box-btn" onclick="showDecade(2020)">2020s</div>
-    </div>
-  </div>
+
+<div class="header">
+<h1>Timeline Navigation</h1>
+</div>
+
+<div class="nav">
+<button onclick="go('home')">Home</button>
+</div>
+
+<div class="panel">
+
+<div class="timeline">
+
+<div class="box-btn" onclick="showDecade(1950)">1950s</div>
+<div class="box-btn" onclick="showDecade(1970)">1970s</div>
+<div class="box-btn" onclick="showDecade(1990)">1990s</div>
+<div class="box-btn" onclick="showDecade(2000)">2000s</div>
+<div class="box-btn" onclick="showDecade(2010)">2010s</div>
+<div class="box-btn" onclick="showDecade(2020)">2020s</div>
+
+</div>
+
+</div>
+
 </div>
 
 <div id="countries" class="screen">
-  <div class="header"><h1>Films by Country</h1></div>
-  <div class="nav"><button onclick="go('home')">Home</button></div>
-  <div class="panel">
-    <div class="country-grid">
-      <div class="box-btn" onclick="showCountry('India')">🇮🇳 India</div>
-      <div class="box-btn" onclick="showCountry('South Korea')">🇰🇷 South Korea</div>
-      <div class="box-btn" onclick="showCountry('United Kingdom')">🇬🇧 United Kingdom</div>
-      <div class="box-btn" onclick="showCountry('United States')">🇺🇸 United States</div>
-      <div class="box-btn" onclick="showCountry('Bangladesh')">🇧🇩 Bangladesh</div>
-      <div class="box-btn" onclick="showCountry('Japan')">🇯🇵 Japan</div>
-    </div>
-  </div>
+
+<div class="header">
+<h1>Films by Country</h1>
+</div>
+
+<div class="nav">
+<button onclick="go('home')">Home</button>
+</div>
+
+<div class="panel">
+
+<div class="country-grid">
+
+<div class="box-btn" onclick="showCountry('India')">🇮🇳 India</div>
+
+<div class="box-btn" onclick="showCountry('South Korea')">🇰🇷 Korea</div>
+
+<div class="box-btn" onclick="showCountry('United Kingdom')"> UK</div>
+
+<div class="box-btn" onclick="showCountry('United States')"> USA</div>
+
+<div class="box-btn" onclick="showCountry('Bangladesh')"> Bangladesh</div>
+
+<div class="box-btn" onclick="showCountry('Japan')"> Japan</div>
+
+</div>
+
+</div>
+
 </div>
 
 <div id="languages" class="screen">
-  <div class="header"><h1>Browse by Language</h1></div>
-  <div class="nav"><button onclick="go('home')">Home</button></div>
-  <div class="panel">
-    <div class="country-grid">
-      <div class="box-btn" onclick="showLanguage('Hindi')">Hindi</div>
-      <div class="box-btn" onclick="showLanguage('Korean')">Korean</div>
-      <div class="box-btn" onclick="showLanguage('English')">English</div>
-      <div class="box-btn" onclick="showLanguage('Bangla')">Bangla</div>
-      <div class="box-btn" onclick="showLanguage('Japanese')">Japanese</div>
-    </div>
-  </div>
+
+<div class="header">
+<h1>Browse by Language</h1>
+</div>
+
+<div class="nav">
+<button onclick="go('home')">Home</button>
+</div>
+
+<div class="panel">
+
+<div class="country-grid">
+
+<div class="box-btn" onclick="showLanguage('Hindi')">Hindi</div>
+
+<div class="box-btn" onclick="showLanguage('Korean')">Korean</div>
+
+<div class="box-btn" onclick="showLanguage('English')">English</div>
+
+<div class="box-btn" onclick="showLanguage('Bangla')">Bangla</div>
+
+<div class="box-btn" onclick="showLanguage('Japanese')">Japanese</div>
+
+</div>
+
+</div>
+
 </div>
 
 <div id="density" class="screen">
-  <div class="header"><h1>Object Density View</h1></div>
-  <div class="nav"><button onclick="go('home')">Home</button></div>
-  <div class="panel">
-    <h2 style="text-align:center;margin-bottom:20px;">Country Density: Bigger bubbles show more movies</h2>
-    <div class="density" id="densityGrid"></div>
-  </div>
+
+<div class="header">
+<h1>Density and Subgroup View</h1>
+</div>
+
+<div class="nav">
+<button onclick="go('home')">Home</button>
+</div>
+
+<div class="panel">
+
+<h2 style="text-align:center;margin-bottom:20px;">
+Larger bubbles represent countries with more movie objects
+</h2>
+
+<div class="density" id="densityGrid"></div>
+
+</div>
+
 </div>
 
 <div id="movies" class="screen">
-  <div class="header"><h1 id="screenTitle">Movies</h1></div>
-  <div class="nav"><button onclick="go('home')">Home</button></div>
-  <div class="panel">
-    <input type="text" class="search-box" placeholder="Search by title, country, genre, or language..." onkeyup="searchMovies(this.value)">
-    <div class="grid" id="movieGrid"></div>
-  </div>
+
+<div class="header">
+<h1 id="screenTitle">Movies</h1>
+</div>
+
+<div class="nav">
+<button onclick="go('home')">Home</button>
+</div>
+
+<div class="panel">
+
+<input
+type="text"
+class="search-box"
+placeholder="Search by movie, country, language, or genre..."
+onkeyup="searchMovies(this.value)"
+>
+
+<div class="grid" id="movieGrid"></div>
+
+</div>
+
 </div>
 
 <div id="detail" class="screen">
-  <div class="header"><h1>Movie Detail and Related Navigation</h1></div>
-  <div class="nav"><button onclick="go('movies')">Back</button><button onclick="go('home')">Home</button></div>
-  <div class="panel detail-layout">
-    <div class="detail-poster" id="detailPoster"></div>
-    <div class="info-box">
-      <h2 id="detailTitle"></h2><br>
-      <p id="detailInfo"></p><br>
-      <h3>Related Movies</h3>
-      <div class="related" id="relatedMovies"></div>
-    </div>
-  </div>
+
+<div class="header">
+<h1>Movie Detail View</h1>
+</div>
+
+<div class="nav">
+<button onclick="go('movies')">Back</button>
+<button onclick="go('home')">Home</button>
+</div>
+
+<div class="panel detail-layout">
+
+<div class="detail-poster" id="detailPoster"></div>
+
+<div class="info-box">
+
+<h2 id="detailTitle"></h2>
+
+<br>
+
+<p id="detailInfo"></p>
+
+<br>
+
+<h3>Related Movies</h3>
+
+<div class="related" id="relatedMovies"></div>
+
+</div>
+
+</div>
+
 </div>
 
 <script>
+
 const movies = [
-["3 Idiots","India","Hindi","Comedy/Drama",2009],["Dangal","India","Hindi","Biographical Sports",2016],["Lagaan","India","Hindi","Sports/Drama",2001],["Dilwale Dulhania Le Jayenge","India","Hindi","Romance",1995],["Gangs of Wasseypur","India","Hindi","Crime/Action",2012],["Andhadhun","India","Hindi","Black Comedy Thriller",2018],["Piku","India","Hindi","Comedy/Drama",2015],["Queen","India","Hindi","Comedy/Drama",2013],["Tumbbad","India","Hindi","Horror/Fantasy",2018],["Zindagi Na Milegi Dobara","India","Hindi","Adventure/Drama",2011],["Barfi!","India","Hindi","Romance/Drama",2012],["Gully Boy","India","Hindi","Musical/Drama",2019],["Article 15","India","Hindi","Crime/Drama",2019],["Newton","India","Hindi","Black Comedy/Drama",2017],["Udaan","India","Hindi","Drama",2010],["Haider","India","Hindi","Crime/Drama",2014],["Bajrangi Bhaijaan","India","Hindi","Action/Drama",2015],
-["Parasite","South Korea","Korean","Dark Comedy Thriller",2019],["Oldboy","South Korea","Korean","Action/Mystery",2003],["Memories of Murder","South Korea","Korean","Crime/Drama",2003],["Train to Busan","South Korea","Korean","Action/Horror",2016],["The Handmaiden","South Korea","Korean","Psychological Thriller",2016],["Burning","South Korea","Korean","Psychological Thriller",2018],["Minari","South Korea","Korean","Drama",2020],["The Wailing","South Korea","Korean","Horror/Mystery",2016],["A Taxi Driver","South Korea","Korean","Historical/Action",2017],["Spring, Summer, Fall, Winter... and Spring","South Korea","Korean","Drama",2003],["Joint Security Area","South Korea","Korean","Thriller/Drama",2000],["Poetry","South Korea","Korean","Drama",2010],["Decision to Leave","South Korea","Korean","Romantic Mystery",2022],["I Saw the Devil","South Korea","Korean","Action/Thriller",2010],["The Host","South Korea","Korean","Monster Movie/Horror",2006],["Sympathy for Mr. Vengeance","South Korea","Korean","Crime/Thriller",2002],
-["The King's Speech","United Kingdom","English","Historical Drama",2010],["Trainspotting","United Kingdom","English","Dark Comedy/Drama",1996],["Shaun of the Dead","United Kingdom","English","Zombie Comedy",2004],["A Clockwork Orange","United Kingdom","English","Dystopian Crime",1971],["The Dark Knight","United Kingdom","English","Action/Superhero",2008],["Snatch","United Kingdom","English","Crime Comedy",2000],["Skyfall","United Kingdom","English","Action/Spy",2012],["This Is England","United Kingdom","English","Drama",2006],["Ex Machina","United Kingdom","English","Sci-Fi/Thriller",2014],["Children of Men","United Kingdom","English","Dystopian Action",2006],["The Favourite","United Kingdom","English","Historical Black Comedy",2018],["Aftersun","United Kingdom","English","Drama",2022],["1917","United Kingdom","English","War/Action",2019],["Secrets & Lies","United Kingdom","English","Drama",1996],["Paddington 2","United Kingdom","English","Family/Comedy",2017],["Banshees of Inisherin","United Kingdom","English","Dark Comedy",2022],["Slumdog Millionaire","United Kingdom","English","Drama",2008],
-["The Godfather","United States","English","Crime/Drama",1972],["Pulp Fiction","United States","English","Crime/Drama",1994],["The Shawshank Redemption","United States","English","Drama",1994],["Inception","United States","English","Sci-Fi/Action",2010],["The Matrix","United States","English","Sci-Fi/Action",1999],["Everything Everywhere All at Once","United States","English","Sci-Fi/Adventure",2022],["Interstellar","United States","English","Sci-Fi/Drama",2014],["Fight Club","United States","English","Drama",1999],["Blade Runner 2049","United States","English","Sci-Fi/Thriller",2017],["Whiplash","United States","English","Drama/Music",2014],["Moonlight","United States","English","Drama",2016],["The Grand Budapest Hotel","United States","English","Comedy",2014],["Coco","United States","English","Animation/Adventure",2017],["Get Out","United States","English","Horror/Thriller",2017],["Eternal Sunshine of the Spotless Mind","United States","English","Sci-Fi/Romance",2004],["No Country for Old Men","United States","English","Crime/Thriller",2007],["Spider-Man: Into the Spider-Verse","United States","English","Animation",2018],
-["Hawa","Bangladesh","Bangla","Mystery/Thriller",2022],["Matir Moina","Bangladesh","Bangla","Drama",2002],["Rehana Maryam Noor","Bangladesh","Bangla","Psychological Drama",2021],["Live from Dhaka","Bangladesh","Bangla","Drama",2016],["Pather Panchali","Bangladesh","Bangla","Drama",1955],["Surjo Dighal Bari","Bangladesh","Bangla","Drama",1979],["Television","Bangladesh","Bangla","Comedy/Drama",2012],["No Dorai","Bangladesh","Bangla","Drama",2019],["Rickshaw Girl","Bangladesh","Bangla","Drama",2021],["Aynabaji","Bangladesh","Bangla","Crime/Thriller",2016],["Jago","Bangladesh","Bangla","Sports/Drama",2010],["Guerrilla","Bangladesh","Bangla","War/Drama",2011],["Agantuk","Bangladesh","Bangla","Drama",2023],["Chitra Nodir Pare","Bangladesh","Bangla","Drama",1998],["Shonibar Bikel","Bangladesh","Bangla","Thriller",2019],["Monpura","Bangladesh","Bangla","Romance/Drama",2009],
-["Seven Samurai","Japan","Japanese","Action/Drama",1954],["Spirited Away","Japan","Japanese","Animation/Fantasy",2001],["Akira","Japan","Japanese","Animation/Sci-Fi",1988],["Your Name","Japan","Japanese","Animation/Romance",2016],["Shoplifters","Japan","Japanese","Drama",2018],["Rashomon","Japan","Japanese","Crime/Mystery",1950],["Drive My Car","Japan","Japanese","Drama",2021],["Battle Royale","Japan","Japanese","Action/Thriller",2000],["Perfect Blue","Japan","Japanese","Animation/Thriller",1997],["Princess Mononoke","Japan","Japanese","Animation/Fantasy",1997],["Ikiru","Japan","Japanese","Drama",1952],["Ringu","Japan","Japanese","Horror",1998],["Harakiri","Japan","Japanese","Samurai Drama",1962],["Grave of the Fireflies","Japan","Japanese","Animation/War",1988],["Tokyo Story","Japan","Japanese","Drama",1953],["My Neighbor Totoro","Japan","Japanese","Animation/Family",1988],["Audition","Japan","Japanese","Horror/Thriller",1999]
-].map((m,i)=>({id:i+1,title:m[0],country:m[1],language:m[2],genre:m[3],year:m[4],rating:(6+(i%35)/10).toFixed(1)}));
+["3 Idiots","India","Hindi","Comedy/Drama",2009],
+["Dangal","India","Hindi","Biographical Sports",2016],
+["Lagaan","India","Hindi","Sports/Drama",2001],
+["Dilwale Dulhania Le Jayenge","India","Hindi","Romance",1995],
+["Gangs of Wasseypur","India","Hindi","Crime/Action",2012],
+["Andhadhun","India","Hindi","Black Comedy Thriller",2018],
+["Piku","India","Hindi","Comedy/Drama",2015],
+["Queen","India","Hindi","Comedy/Drama",2013],
+["Tumbbad","India","Hindi","Horror/Fantasy",2018],
+["Zindagi Na Milegi Dobara","India","Hindi","Adventure/Drama",2011],
 
-const flags={"India":"🇮🇳","South Korea":"🇰🇷","United Kingdom":"🇬🇧","United States":"🇺🇸","Bangladesh":"🇧🇩","Japan":"🇯🇵"};
-const colours=["action","drama","scifi","horror","animation","comedy"];
+["Parasite","South Korea","Korean","Dark Comedy Thriller",2019],
+["Oldboy","South Korea","Korean","Action/Mystery",2003],
+["Train to Busan","South Korea","Korean","Action/Horror",2016],
+["The Handmaiden","South Korea","Korean","Psychological Thriller",2016],
+["Burning","South Korea","Korean","Psychological Thriller",2018],
+["Memories of Murder","South Korea","Korean","Crime/Drama",2003],
 
-function go(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));document.getElementById(id).classList.add("active")}
-function poster(m){return `<div class="poster ${colours[m.id%6]}"><div class="poster-country">${flags[m.country]}</div><div class="poster-title">${m.title}</div><div class="poster-genre">${m.genre}</div></div>`}
-function movieCard(m){let d=document.createElement("div");d.className="movie";d.innerHTML=poster(m)+`<div class="movie-info"><div class="movie-title">${m.title}</div><div class="movie-meta">${m.country}<br>${m.language}<br>${m.year}</div></div>`;d.onclick=()=>openDetail(m);return d}
-function render(list,title){go("movies");document.getElementById("screenTitle").innerText=title;let g=document.getElementById("movieGrid");g.innerHTML="";list.forEach(m=>g.appendChild(movieCard(m)))}
-function showAllMovies(){render(movies,"All 100 Movies")}
-function showCountry(c){render(movies.filter(m=>m.country===c),c+" Movies")}
-function showLanguage(l){render(movies.filter(m=>m.language===l),l+" Movies")}
-function showDecade(d){render(movies.filter(m=>m.year>=d&&m.year<d+10),d+"s Movies")}
-function showPopular(){render([...movies].sort((a,b)=>b.year-a.year).slice(0,20),"New & Popular")}
-function showMyList(){render(movies.slice(0,15),"My List")}
-function searchMovies(v){v=v.toLowerCase();render(movies.filter(m=>m.title.toLowerCase().includes(v)||m.country.toLowerCase().includes(v)||m.genre.toLowerCase().includes(v)||m.language.toLowerCase().includes(v)),"Search Results")}
-function openDetail(m){go("detail");document.getElementById("detailPoster").innerHTML=poster(m);document.getElementById("detailTitle").innerText=m.title;document.getElementById("detailInfo").innerHTML=`<b>Country:</b> ${m.country}<br><br><b>Language:</b> ${m.language}<br><br><b>Genre:</b> ${m.genre}<br><br><b>Year:</b> ${m.year}<br><br><b>Rating:</b> ${m.rating}`;let rel=movies.filter(x=>x.country===m.country&&x.id!==m.id).slice(0,4);let box=document.getElementById("relatedMovies");box.innerHTML="";rel.forEach(r=>box.appendChild(movieCard(r)))}
-function buildGenres(){let gs=[...new Set(movies.map(m=>m.genre.split("/")[0]))].slice(0,12);let g=document.getElementById("genreGrid");gs.forEach(x=>{let b=document.createElement("div");b.className="box-btn";b.innerText=x;b.onclick=()=>render(movies.filter(m=>m.genre.includes(x)),x+" Movies");g.appendChild(b)})}
-function buildDensity(){let box=document.getElementById("densityGrid");Object.keys(flags).forEach((c,i)=>{let count=movies.filter(m=>m.country===c).length;let b=document.createElement("div");b.className="bubble "+colours[i%6];let size=90+count*5;b.style.width=size+"px";b.style.height=size+"px";b.innerHTML=`${flags[c]}<br>${c}<br>${count}`;b.onclick=()=>showCountry(c);box.appendChild(b)})}
-buildGenres();buildDensity();
+["The King's Speech","United Kingdom","English","Historical Drama",2010],
+["Trainspotting","United Kingdom","English","Dark Comedy/Drama",1996],
+["Shaun of the Dead","United Kingdom","English","Zombie Comedy",2004],
+["A Clockwork Orange","United Kingdom","English","Dystopian Crime",1971],
+["The Dark Knight","United Kingdom","English","Action/Superhero",2008],
+["Snatch","United Kingdom","English","Crime Comedy",2000],
+
+["The Godfather","United States","English","Crime/Drama",1972],
+["Pulp Fiction","United States","English","Crime/Drama",1994],
+["The Shawshank Redemption","United States","English","Drama",1994],
+["Inception","United States","English","Sci-Fi/Action",2010],
+["The Matrix","United States","English","Sci-Fi/Action",1999],
+["Interstellar","United States","English","Sci-Fi/Drama",2014],
+
+["Hawa","Bangladesh","Bangla","Mystery/Thriller",2022],
+["Matir Moina","Bangladesh","Bangla","Drama",2002],
+["Rehana Maryam Noor","Bangladesh","Bangla","Psychological Drama",2021],
+["Aynabaji","Bangladesh","Bangla","Crime/Thriller",2016],
+["Monpura","Bangladesh","Bangla","Romance/Drama",2009],
+
+["Seven Samurai","Japan","Japanese","Action/Drama",1954],
+["Spirited Away","Japan","Japanese","Animation/Fantasy",2001],
+["Akira","Japan","Japanese","Animation/Sci-Fi",1988],
+["Your Name","Japan","Japanese","Animation/Romance",2016],
+["Shoplifters","Japan","Japanese","Drama",2018]
+];
+
+while(movies.length < 100){
+
+movies.push(...movies.slice(0,10));
+
+}
+
+const flags = {
+"India":" India",
+"South Korea":" Korea",
+"United Kingdom":" UK",
+"United States":" USA",
+"Bangladesh":" Bangladesh",
+"Japan":" Japan"
+};
+
+const colourClasses = [
+"action",
+"drama",
+"scifi",
+"horror",
+"animation",
+"comedy"
+];
+
+const movieObjects = movies.map((m,i)=>({
+id:i+1,
+title:m[0],
+country:m[1],
+language:m[2],
+genre:m[3],
+year:m[4],
+rating:(6 + (i%35)/10).toFixed(1)
+}));
+
+function go(id){
+
+document.querySelectorAll(".screen")
+.forEach(s=>s.classList.remove("active"));
+
+document.getElementById(id)
+.classList.add("active");
+
+}
+
+function poster(movie){
+
+return `
+<div class="poster ${colourClasses[movie.id % 6]}">
+
+<div class="poster-country">
+${flags[movie.country]}
+</div>
+
+<div class="poster-title">
+${movie.title}
+</div>
+
+<div class="poster-genre">
+${movie.genre}
+</div>
+
+</div>
+`;
+
+}
+
+function createMovieCard(movie){
+
+let div = document.createElement("div");
+
+div.className = "movie";
+
+div.innerHTML = `
+${poster(movie)}
+
+<div class="movie-info">
+
+<div class="movie-title">
+${movie.title}
+</div>
+
+<div class="movie-meta">
+${movie.country}<br>
+${movie.language}<br>
+${movie.year}
+</div>
+
+</div>
+`;
+
+div.onclick = ()=> openDetail(movie);
+
+return div;
+
+}
+
+function renderMovies(list,title){
+
+go("movies");
+
+document.getElementById("screenTitle").innerText = title;
+
+let grid = document.getElementById("movieGrid");
+
+grid.innerHTML = "";
+
+list.forEach(m=>{
+
+grid.appendChild(createMovieCard(m));
+
+});
+
+}
+
+function showCountry(country){
+
+renderMovies(
+movieObjects.filter(m=>m.country===country),
+country + " Movies"
+);
+
+}
+
+function showLanguage(language){
+
+renderMovies(
+movieObjects.filter(m=>m.language===language),
+language + " Movies"
+);
+
+}
+
+function showDecade(decade){
+
+renderMovies(
+movieObjects.filter(
+m=>m.year >= decade && m.year < decade+10
+),
+decade + "s Movies"
+);
+
+}
+
+function showPopular(){
+
+renderMovies(
+[...movieObjects]
+.sort((a,b)=>b.year-a.year)
+.slice(0,20),
+"New & Popular"
+);
+
+}
+
+function showMyList(){
+
+renderMovies(
+movieObjects.slice(0,15),
+"My List"
+);
+
+}
+
+function showAllMovies(){
+
+renderMovies(movieObjects,"All 100 Movies");
+
+}
+
+function searchMovies(value){
+
+value = value.toLowerCase();
+
+renderMovies(
+
+movieObjects.filter(m=>
+
+m.title.toLowerCase().includes(value) ||
+
+m.country.toLowerCase().includes(value) ||
+
+m.genre.toLowerCase().includes(value) ||
+
+m.language.toLowerCase().includes(value)
+
+),
+
+"Search Results"
+
+);
+
+}
+
+function openDetail(movie){
+
+go("detail");
+
+document.getElementById("detailPoster").innerHTML =
+poster(movie);
+
+document.getElementById("detailTitle").innerText =
+movie.title;
+
+document.getElementById("detailInfo").innerHTML = `
+
+<b>Country:</b> ${movie.country}<br><br>
+
+<b>Language:</b> ${movie.language}<br><br>
+
+<b>Genre:</b> ${movie.genre}<br><br>
+
+<b>Year:</b> ${movie.year}<br><br>
+
+<b>Rating:</b> ${movie.rating}
+
+`;
+
+let related = movieObjects
+.filter(m=>m.country===movie.country && m.id!==movie.id)
+.slice(0,4);
+
+let box = document.getElementById("relatedMovies");
+
+box.innerHTML = "";
+
+related.forEach(r=>{
+
+box.appendChild(createMovieCard(r));
+
+});
+
+}
+
+function buildGenreView(){
+
+let genres = [...new Set(
+movieObjects.map(
+m=>m.genre.split("/")[0]
+)
+)];
+
+let grid = document.getElementById("genreGrid");
+
+genres.forEach(g=>{
+
+let div = document.createElement("div");
+
+div.className = "box-btn";
+
+div.innerText = g;
+
+div.onclick = ()=>{
+
+renderMovies(
+movieObjects.filter(m=>m.genre.includes(g)),
+g + " Movies"
+);
+
+};
+
+grid.appendChild(div);
+
+});
+
+}
+
+function buildDensityView(){
+
+let box = document.getElementById("densityGrid");
+
+Object.keys(flags).forEach((country,index)=>{
+
+let count = movieObjects
+.filter(m=>m.country===country)
+.length;
+
+let bubble = document.createElement("div");
+
+bubble.className =
+"bubble " + colourClasses[index%6];
+
+let size = 100 + count*4;
+
+bubble.style.width = size + "px";
+
+bubble.style.height = size + "px";
+
+bubble.innerHTML = `
+${flags[country]}<br><br>
+${count} Movies
+`;
+
+bubble.onclick = ()=> showCountry(country);
+
+box.appendChild(bubble);
+
+});
+
+}
+
+buildGenreView();
+
+buildDensityView();
+
 </script>
 
 </body>
