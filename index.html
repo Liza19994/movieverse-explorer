@@ -5,166 +5,460 @@
 <title>MovieVerse Explorer</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Arial,sans-serif;background:#0f172a;color:white}
-.screen{display:none;padding:24px;min-height:100vh}
-.screen.active{display:block}
-.header{background:linear-gradient(135deg,#1e3a8a,#7c3aed);padding:28px;border-radius:24px;text-align:center;margin-bottom:24px}
-.header h1{font-size:38px;margin-bottom:10px}
-.header p{color:#dbeafe}
-.nav{display:flex;gap:12px;justify-content:center;margin-bottom:22px;flex-wrap:wrap}
-button{border:none;padding:12px 18px;border-radius:999px;background:#2563eb;color:white;font-weight:bold;cursor:pointer;font-size:14px}
-button:hover{background:#1d4ed8}
-.panel{background:#111827;padding:24px;border-radius:22px;margin-bottom:24px}
-.home-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
-.home-card{padding:34px;border-radius:24px;cursor:pointer;min-height:160px;display:flex;flex-direction:column;justify-content:center;text-align:center;transition:.2s}
-.home-card:hover{transform:translateY(-5px);outline:4px solid #facc15}
-.home-card strong{font-size:24px;margin-bottom:10px}
-.action{background:linear-gradient(135deg,#991b1b,#ef4444)}
-.drama{background:linear-gradient(135deg,#581c87,#9333ea)}
-.scifi{background:linear-gradient(135deg,#1e3a8a,#3b82f6)}
-.horror{background:linear-gradient(135deg,#020617,#334155)}
-.animation{background:linear-gradient(135deg,#14532d,#22c55e)}
-.comedy{background:linear-gradient(135deg,#9a3412,#fb923c)}
-.gold{background:linear-gradient(135deg,#92400e,#facc15)}
-.green{background:linear-gradient(135deg,#064e3b,#10b981)}
-.pink{background:linear-gradient(135deg,#831843,#ec4899)}
-.cyan{background:linear-gradient(135deg,#164e63,#06b6d4)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:18px}
-.movie{background:#1e293b;border-radius:18px;overflow:hidden;cursor:pointer;transition:.2s;box-shadow:0 6px 15px rgba(0,0,0,.3)}
-.movie:hover{transform:scale(1.05);outline:4px solid #facc15}
-.poster{height:270px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;color:white}
-.poster-country{font-size:20px;text-align:right;font-weight:bold}
-.poster-title{font-size:20px;font-weight:bold;line-height:1.2}
-.poster-genre{font-size:13px;background:rgba(0,0,0,.35);padding:6px;border-radius:10px}
+
+body{
+  font-family:'Nunito',sans-serif;
+  background:#f4f7fb;
+  color:#172033;
+  min-height:100vh;
+}
+
+.app{
+  display:grid;
+  grid-template-columns:250px 1fr 300px;
+  gap:18px;
+  padding:18px;
+  min-height:100vh;
+}
+
+.sidebar,.main,.inspector{
+  background:white;
+  border-radius:24px;
+  border:1px solid #e5eaf2;
+  box-shadow:0 10px 30px rgba(0,0,0,.06);
+}
+
+.sidebar{
+  padding:20px;
+  position:sticky;
+  top:18px;
+  height:calc(100vh - 36px);
+  overflow:auto;
+}
+
+.logo{display:flex;gap:12px;align-items:center;margin-bottom:22px}
+
+.logo-icon{
+  width:50px;height:50px;border-radius:16px;
+  background:linear-gradient(135deg,#2563eb,#14b8a6);
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;color:white;
+}
+
+.logo h1{font-size:21px;font-weight:900;line-height:1.1}
+.logo small{color:#64748b}
+
+.section-title{
+  margin:18px 0 10px;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:#64748b;
+}
+
+.nav-btn{
+  width:100%;
+  border:none;
+  margin-bottom:10px;
+  padding:13px 14px;
+  border-radius:16px;
+  background:#f1f5f9;
+  font-weight:800;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  transition:.2s;
+}
+
+.nav-btn:hover,.nav-btn.active{
+  background:linear-gradient(135deg,#2563eb,#14b8a6);
+  color:white;
+  transform:translateX(3px);
+}
+
+.nav-btn span{font-size:12px;color:#64748b}
+.nav-btn:hover span,.nav-btn.active span{color:white}
+
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+.stat{
+  background:#f8fafc;
+  padding:12px;
+  border-radius:16px;
+  border:1px solid #e2e8f0;
+}
+
+.stat strong{display:block;font-size:22px;color:#2563eb}
+.stat small{color:#64748b}
+
+.main{padding:22px}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:18px;
+  margin-bottom:15px;
+}
+
+.title-block h2{font-size:34px;font-weight:900}
+.title-block p{color:#64748b;margin-top:5px}
+
+.search{
+  min-width:300px;
+  padding:14px 18px;
+  border-radius:18px;
+  border:1px solid #cbd5e1;
+  outline:none;
+  font-size:15px;
+}
+
+.search:focus{
+  border-color:#2563eb;
+  box-shadow:0 0 0 4px rgba(37,99,235,.1);
+}
+
+.action-row{display:flex;gap:12px;margin-bottom:18px}
+
+.action-btn{
+  border:none;
+  padding:12px 20px;
+  border-radius:14px;
+  font-weight:900;
+  cursor:pointer;
+  color:white;
+  transition:.2s;
+}
+
+.action-btn:hover{transform:translateY(-2px)}
+.back-btn{background:#2563eb}
+.home-btn{background:#14b8a6}
+
+.quick-row{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin-bottom:18px;
+}
+
+.quick-card{
+  padding:18px;
+  border-radius:20px;
+  color:white;
+  cursor:pointer;
+  transition:.2s;
+  min-height:100px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.quick-card:hover{transform:translateY(-4px)}
+.quick-card strong{font-size:20px}
+.quick-card span{font-size:13px;margin-top:6px}
+
+.q1{background:linear-gradient(135deg,#2563eb,#38bdf8)}
+.q2{background:linear-gradient(135deg,#16a34a,#14b8a6)}
+.q3{background:linear-gradient(135deg,#f97316,#facc15)}
+.q4{background:linear-gradient(135deg,#9333ea,#ec4899)}
+
+.view-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:14px;
+}
+
+.view-title h3{font-size:22px}
+
+.count-pill{
+  background:#dbeafe;
+  color:#1d4ed8;
+  padding:8px 14px;
+  border-radius:999px;
+  font-weight:900;
+}
+
+.visual-space{
+  min-height:560px;
+  background:#f8fafc;
+  border-radius:24px;
+  border:1px solid #e2e8f0;
+  padding:18px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(165px,1fr));
+  gap:14px;
+}
+
+.movie{
+  background:white;
+  border-radius:18px;
+  overflow:hidden;
+  cursor:pointer;
+  transition:.2s;
+  border:1px solid #e2e8f0;
+  box-shadow:0 6px 18px rgba(0,0,0,.06);
+}
+
+.movie:hover{
+  transform:translateY(-5px);
+  outline:3px solid #2563eb;
+}
+
+.poster{
+  height:220px;
+  padding:14px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  color:white;
+}
+
+.poster-country{text-align:right;font-size:14px;font-weight:900}
+.poster-title{font-size:18px;font-weight:900;line-height:1.1}
+
+.poster-genre{
+  font-size:11px;
+  padding:7px;
+  border-radius:12px;
+  background:rgba(0,0,0,.3);
+  width:max-content;
+}
+
 .movie-info{padding:12px}
-.movie-title{font-size:14px;font-weight:bold;margin-bottom:6px}
-.movie-meta{font-size:12px;color:#cbd5e1;line-height:1.5}
-.search-box{width:100%;padding:14px;border:none;border-radius:14px;font-size:16px;margin-bottom:20px}
-.timeline,.country-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px}
-.box-btn{padding:34px;border-radius:20px;background:#1e293b;text-align:center;font-weight:bold;cursor:pointer;transition:.2s}
-.box-btn:hover{background:#2563eb;transform:scale(1.03)}
-.detail-layout{display:grid;grid-template-columns:330px 1fr;gap:24px}
-.detail-poster{height:500px;border-radius:24px;overflow:hidden}
-.info-box{background:#1e293b;padding:24px;border-radius:22px}
-.related{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-top:18px}
-.related .poster{height:180px}
-.related .poster-title{font-size:12px}
-.density{display:flex;flex-wrap:wrap;gap:28px;justify-content:center;align-items:center}
-.bubble{border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:bold;cursor:pointer;color:white;padding:12px}
-.bubble:hover{outline:4px solid #facc15}
+.movie-title{font-size:13px;font-weight:900}
+.movie-meta{font-size:12px;margin-top:5px;line-height:1.4;color:#64748b}
+
+.c1{background:linear-gradient(135deg,#2563eb,#60a5fa)}
+.c2{background:linear-gradient(135deg,#16a34a,#4ade80)}
+.c3{background:linear-gradient(135deg,#f97316,#fb923c)}
+.c4{background:linear-gradient(135deg,#9333ea,#c084fc)}
+.c5{background:linear-gradient(135deg,#dc2626,#fb7185)}
+.c6{background:linear-gradient(135deg,#0f172a,#64748b)}
+.c7{background:linear-gradient(135deg,#0891b2,#22d3ee)}
+.c8{background:linear-gradient(135deg,#be185d,#f472b6)}
+
+.category-board,.timeline-board{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:16px;
+}
+
+.category-card,.timeline-card{
+  background:white;
+  border-radius:20px;
+  padding:20px;
+  border:1px solid #e2e8f0;
+  cursor:pointer;
+  transition:.2s;
+  box-shadow:0 6px 18px rgba(0,0,0,.05);
+}
+
+.category-card:hover,.timeline-card:hover{
+  background:#2563eb;
+  color:white;
+  transform:translateY(-4px);
+}
+
+.category-card strong,.timeline-card strong{
+  display:block;
+  font-size:22px;
+  margin-bottom:8px;
+}
+
+.category-card small,.timeline-card small{color:#64748b}
+.category-card:hover small,.timeline-card:hover small{color:white}
+
+.bubble-view{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  gap:24px;
+  min-height:520px;
+}
+
+.bubble{
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:white;
+  font-weight:900;
+  cursor:pointer;
+  transition:.2s;
+  padding:12px;
+  box-shadow:0 8px 20px rgba(0,0,0,.1);
+}
+
+.bubble:hover{transform:scale(1.06)}
+
+.inspector{
+  padding:20px;
+  position:sticky;
+  top:18px;
+  height:calc(100vh - 36px);
+  overflow:auto;
+}
+
+.inspector h3{font-size:22px;margin-bottom:14px}
+
+.empty{
+  text-align:center;
+  color:#64748b;
+  padding:80px 20px;
+  line-height:1.6;
+}
+
+.detail-poster{
+  border-radius:20px;
+  overflow:hidden;
+  margin-bottom:14px;
+}
+
+.detail-poster .poster{height:340px}
+
+.detail-box{
+  background:#f8fafc;
+  padding:16px;
+  border-radius:18px;
+  border:1px solid #e2e8f0;
+  line-height:1.7;
+}
+
+.related-list{
+  display:grid;
+  gap:10px;
+  margin-top:14px;
+}
+
+.related-item{
+  background:#f8fafc;
+  padding:12px;
+  border-radius:16px;
+  border:1px solid #e2e8f0;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.related-item:hover{
+  background:#2563eb;
+  color:white;
+}
+
+@media(max-width:1100px){
+  .app{grid-template-columns:1fr}
+  .sidebar,.inspector{position:relative;height:auto}
+  .quick-row{grid-template-columns:1fr 1fr}
+  .topbar{flex-direction:column;align-items:stretch}
+  .search{min-width:100%}
+}
 </style>
 </head>
 
 <body>
 
-<div id="home" class="screen active">
-  <div class="header">
-    <h1>MovieVerse Explorer</h1>
-    <p>Interactive Navigation Visualisation for 100 Movie Objects</p>
-  </div>
+<div class="app">
 
-  <div class="panel">
-    <div class="home-grid">
-      <div class="home-card action" onclick="go('genres')"><strong>Browse by Genre</strong><span>Explore movie genre clusters</span></div>
-      <div class="home-card scifi" onclick="go('timeline')"><strong>Timeline Navigation</strong><span>Browse by decade</span></div>
-      <div class="home-card animation" onclick="go('countries')"><strong>Films by Country</strong><span>Explore global cinema collections</span></div>
-      <div class="home-card pink" onclick="go('languages')"><strong>Browse by Language</strong><span>Hindi, Korean, Bangla, English, Japanese</span></div>
-      <div class="home-card comedy" onclick="showPopular()"><strong>New & Popular</strong><span>Recently released and trending films</span></div>
-      <div class="home-card gold" onclick="showMyList()"><strong>My List</strong><span>Saved favourite movies</span></div>
-      <div class="home-card green" onclick="go('density')"><strong>Density View</strong><span>Visual subgroup size comparison</span></div>
-      <div class="home-card cyan" onclick="showAllMovies()"><strong>All 100 Movies</strong><span>Overview-to-detail exploration</span></div>
+<aside class="sidebar">
+  <div class="logo">
+    <div class="logo-icon">🎬</div>
+    <div>
+      <h1>MovieVerse Explorer</h1>
+      <small>Interactive Movie Navigation</small>
     </div>
   </div>
-</div>
 
-<div id="genres" class="screen">
-  <div class="header"><h1>Browse by Genre</h1></div>
-  <div class="nav"><button onclick="goBack()">⬅ Back</button><button onclick="goHome()">🏠 Home</button></div>
-  <div class="panel"><div class="country-grid" id="genreGrid"></div></div>
-</div>
+  <div class="section-title">Visual Navigation</div>
 
-<div id="timeline" class="screen">
-  <div class="header"><h1>Timeline Navigation</h1></div>
-  <div class="nav"><button onclick="goBack()">⬅ Back</button><button onclick="goHome()">🏠 Home</button></div>
-  <div class="panel">
-    <div class="timeline">
-      <div class="box-btn" onclick="showDecade(1950)">1950s</div>
-      <div class="box-btn" onclick="showDecade(1970)">1970s</div>
-      <div class="box-btn" onclick="showDecade(1990)">1990s</div>
-      <div class="box-btn" onclick="showDecade(2000)">2000s</div>
-      <div class="box-btn" onclick="showDecade(2010)">2010s</div>
-      <div class="box-btn" onclick="showDecade(2020)">2020s</div>
+  <button class="nav-btn active" onclick="showOverview(this)">Overview <span>100</span></button>
+  <button class="nav-btn" onclick="showCategoryBoard('genre',this)">Genre <span>groups</span></button>
+  <button class="nav-btn" onclick="showCategoryBoard('country',this)">Country <span>map</span></button>
+  <button class="nav-btn" onclick="showCategoryBoard('language',this)">Language <span>filter</span></button>
+  <button class="nav-btn" onclick="showTimeline(this)">Timeline <span>years</span></button>
+  <button class="nav-btn" onclick="showDensity(this)">Density <span>bubbles</span></button>
+  <button class="nav-btn" onclick="showPopular(this)">New & Popular <span>20</span></button>
+  <button class="nav-btn" onclick="showMyList(this)">My List <span>15</span></button>
+
+  <div class="section-title">Collection Scope</div>
+
+  <div class="stats">
+    <div class="stat"><strong>100</strong><small>Objects</small></div>
+    <div class="stat"><strong>6</strong><small>Countries</small></div>
+    <div class="stat"><strong>5</strong><small>Languages</small></div>
+    <div class="stat"><strong>50+</strong><small>Genres</small></div>
+  </div>
+</aside>
+
+<main class="main">
+
+  <div class="topbar">
+    <div class="title-block">
+      <h2 id="viewHeading">Collection Overview</h2>
+      <p id="viewSubheading">A visual navigation system for international movie collections.</p>
+    </div>
+
+    <input class="search" id="searchBox" placeholder="Search title, country, genre..." onkeyup="searchCurrent(this.value)">
+  </div>
+
+  <div class="action-row">
+    <button class="action-btn back-btn" id="backButton" onclick="goBack()">← Back</button>
+    <button class="action-btn home-btn" onclick="showOverview()">🏠 Home</button>
+  </div>
+
+  <div class="quick-row">
+    <div class="quick-card q1" onclick="showCategoryBoard('country')">
+      <strong>Country Map</strong>
+      <span>Browse movies by country</span>
+    </div>
+
+    <div class="quick-card q2" onclick="showDensity()">
+      <strong>Density View</strong>
+      <span>See subgroup size visually</span>
+    </div>
+
+    <div class="quick-card q3" onclick="showTimeline()">
+      <strong>Timeline</strong>
+      <span>Browse by decade</span>
+    </div>
+
+    <div class="quick-card q4" onclick="showOverview()">
+      <strong>All Movies</strong>
+      <span>Explore the full collection</span>
     </div>
   </div>
-</div>
 
-<div id="countries" class="screen">
-  <div class="header"><h1>Films by Country</h1></div>
-  <div class="nav"><button onclick="goBack()">⬅ Back</button><button onclick="goHome()">🏠 Home</button></div>
-  <div class="panel">
-    <div class="country-grid">
-      <div class="box-btn" onclick="showCountry('India')"> India</div>
-      <div class="box-btn" onclick="showCountry('South Korea')"> South Korea</div>
-      <div class="box-btn" onclick="showCountry('United Kingdom')"> United Kingdom</div>
-      <div class="box-btn" onclick="showCountry('United States')"> United States</div>
-      <div class="box-btn" onclick="showCountry('Bangladesh')"> Bangladesh</div>
-      <div class="box-btn" onclick="showCountry('Japan')"> Japan</div>
+  <div class="view-title">
+    <h3 id="resultsTitle">All Movies</h3>
+    <div class="count-pill" id="countPill">100 objects</div>
+  </div>
+
+  <section class="visual-space" id="visualSpace"></section>
+
+</main>
+
+<aside class="inspector">
+  <h3>Object Inspector</h3>
+  <div id="inspectorContent">
+    <div class="empty">
+      Click any movie card to view details and navigate to related movie objects.
     </div>
   </div>
-</div>
+</aside>
 
-<div id="languages" class="screen">
-  <div class="header"><h1>Browse by Language</h1></div>
-  <div class="nav"><button onclick="goBack()">⬅ Back</button><button onclick="goHome()">🏠 Home</button></div>
-  <div class="panel">
-    <div class="country-grid">
-      <div class="box-btn" onclick="showLanguage('Hindi')">Hindi</div>
-      <div class="box-btn" onclick="showLanguage('Korean')">Korean</div>
-      <div class="box-btn" onclick="showLanguage('English')">English</div>
-      <div class="box-btn" onclick="showLanguage('Bangla')">Bangla</div>
-      <div class="box-btn" onclick="showLanguage('Japanese')">Japanese</div>
-    </div>
-  </div>
-</div>
-
-<div id="density" class="screen">
-  <div class="header"><h1>Density View</h1></div>
-  <div class="nav"><button onclick="goBack()">⬅ Back</button><button onclick="goHome()">🏠 Home</button></div>
-  <div class="panel">
-    <h2 style="text-align:center;margin-bottom:20px;">Bubble size represents number of movies</h2>
-    <div class="density" id="densityGrid"></div>
-  </div>
-</div>
-
-<div id="movies" class="screen">
-  <div class="header"><h1 id="screenTitle">Movies</h1></div>
-  <div class="nav"><button onclick="goBack()">⬅ Back</button><button onclick="goHome()">🏠 Home</button></div>
-  <div class="panel">
-    <input type="text" class="search-box" placeholder="Search by title, genre, language or country..." onkeyup="searchCurrentMovies(this.value)">
-    <div class="grid" id="movieGrid"></div>
-  </div>
-</div>
-
-<div id="detail" class="screen">
-  <div class="header"><h1>Movie Detail View</h1></div>
-  <div class="nav"><button onclick="goBack()">⬅ Back</button><button onclick="goHome()">🏠 Home</button></div>
-  <div class="panel detail-layout">
-    <div class="detail-poster" id="detailPoster"></div>
-    <div class="info-box">
-      <h2 id="detailTitle"></h2><br>
-      <p id="detailInfo"></p><br>
-      <h3>Related Movies</h3>
-      <div class="related" id="relatedMovies"></div>
-    </div>
-  </div>
 </div>
 
 <script>
-let historyStack = [];
-let currentList = [];
-
-const rawMovies = [
+const rawMovies=[
 ["3 Idiots","India","Hindi","Comedy/Drama",2009],["Dangal","India","Hindi","Biographical Sports",2016],["Lagaan","India","Hindi","Sports/Drama",2001],["Dilwale Dulhania Le Jayenge","India","Hindi","Romance",1995],["Gangs of Wasseypur","India","Hindi","Crime/Action",2012],["Andhadhun","India","Hindi","Black Comedy Thriller",2018],["Piku","India","Hindi","Comedy/Drama",2015],["Queen","India","Hindi","Comedy/Drama",2013],["Tumbbad","India","Hindi","Horror/Fantasy",2018],["Zindagi Na Milegi Dobara","India","Hindi","Adventure/Drama",2011],["Barfi!","India","Hindi","Romance/Drama",2012],["Gully Boy","India","Hindi","Musical/Drama",2019],["Article 15","India","Hindi","Crime/Drama",2019],["Newton","India","Hindi","Black Comedy/Drama",2017],["Udaan","India","Hindi","Drama",2010],["Haider","India","Hindi","Crime/Drama",2014],["Bajrangi Bhaijaan","India","Hindi","Action/Drama",2015],
 ["Parasite","South Korea","Korean","Dark Comedy Thriller",2019],["Oldboy","South Korea","Korean","Action/Mystery",2003],["Memories of Murder","South Korea","Korean","Crime/Drama",2003],["Train to Busan","South Korea","Korean","Action/Horror",2016],["The Handmaiden","South Korea","Korean","Psychological Thriller",2016],["Burning","South Korea","Korean","Psychological Thriller",2018],["Minari","South Korea","Korean","Drama",2020],["The Wailing","South Korea","Korean","Horror/Mystery",2016],["A Taxi Driver","South Korea","Korean","Historical/Action",2017],["Spring, Summer, Fall, Winter... and Spring","South Korea","Korean","Drama",2003],["Joint Security Area","South Korea","Korean","Thriller/Drama",2000],["Poetry","South Korea","Korean","Drama",2010],["Decision to Leave","South Korea","Korean","Romantic Mystery",2022],["I Saw the Devil","South Korea","Korean","Action/Thriller",2010],["The Host","South Korea","Korean","Monster Movie/Horror",2006],["Sympathy for Mr. Vengeance","South Korea","Korean","Crime/Thriller",2002],
 ["The King's Speech","United Kingdom","English","Historical Drama",2010],["Trainspotting","United Kingdom","English","Dark Comedy/Drama",1996],["Shaun of the Dead","United Kingdom","English","Zombie Comedy",2004],["A Clockwork Orange","United Kingdom","English","Dystopian Crime",1971],["The Dark Knight","United Kingdom","English","Action/Superhero",2008],["Snatch","United Kingdom","English","Crime Comedy",2000],["Skyfall","United Kingdom","English","Action/Spy",2012],["This Is England","United Kingdom","English","Drama",2006],["Ex Machina","United Kingdom","English","Sci-Fi/Thriller",2014],["Children of Men","United Kingdom","English","Dystopian Action",2006],["The Favourite","United Kingdom","English","Historical Black Comedy",2018],["Aftersun","United Kingdom","English","Drama",2022],["1917","United Kingdom","English","War/Action",2019],["Secrets & Lies","United Kingdom","English","Drama",1996],["Paddington 2","United Kingdom","English","Family/Comedy",2017],["Banshees of Inisherin","United Kingdom","English","Dark Comedy",2022],["Slumdog Millionaire","United Kingdom","English","Drama",2008],
@@ -173,142 +467,341 @@ const rawMovies = [
 ["Seven Samurai","Japan","Japanese","Action/Drama",1954],["Spirited Away","Japan","Japanese","Animation/Fantasy",2001],["Akira","Japan","Japanese","Animation/Sci-Fi",1988],["Your Name","Japan","Japanese","Animation/Romance",2016],["Shoplifters","Japan","Japanese","Drama",2018],["Rashomon","Japan","Japanese","Crime/Mystery",1950],["Drive My Car","Japan","Japanese","Drama",2021],["Battle Royale","Japan","Japanese","Action/Thriller",2000],["Perfect Blue","Japan","Japanese","Animation/Thriller",1997],["Princess Mononoke","Japan","Japanese","Animation/Fantasy",1997],["Ikiru","Japan","Japanese","Drama",1952],["Ringu","Japan","Japanese","Horror",1998],["Harakiri","Japan","Japanese","Samurai Drama",1962],["Grave of the Fireflies","Japan","Japanese","Animation/War",1988],["Tokyo Story","Japan","Japanese","Drama",1953],["My Neighbor Totoro","Japan","Japanese","Animation/Family",1988],["Audition","Japan","Japanese","Horror/Thriller",1999]
 ];
 
-const flags = {
-"India":" India",
-"South Korea":" South Korea",
-"United Kingdom":" United Kingdom",
-"United States":" United States",
-"Bangladesh":" Bangladesh",
-"Japan":" Japan"
-};
+const colourClasses=["c1","c2","c3","c4","c5","c6","c7","c8"];
 
-const colourClasses = ["action","drama","scifi","horror","animation","comedy"];
-
-const movieObjects = rawMovies.map((m,i)=>({
-id:i+1,title:m[0],country:m[1],language:m[2],genre:m[3],year:m[4],rating:(6+(i%35)/10).toFixed(1)
+const movies=rawMovies.map((m,i)=>({
+  id:i+1,
+  title:m[0],
+  country:m[1],
+  language:m[2],
+  genre:m[3],
+  year:m[4]
 }));
 
-function activeScreen(){
-  return document.querySelector(".screen.active").id;
+let currentList=[...movies];
+let currentParent="overview";
+
+function setActive(btn){
+  document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));
+  if(btn) btn.classList.add("active");
 }
 
-function go(id, addHistory=true){
-  const current = activeScreen();
-  if(addHistory && current !== id) historyStack.push(current);
-  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
+function heading(title,sub){
+  document.getElementById("viewHeading").innerText=title;
+  document.getElementById("viewSubheading").innerText=sub;
 }
 
-function goBack(){
-  if(historyStack.length === 0){ goHome(); return; }
-  const last = historyStack.pop();
-  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
-  document.getElementById(last).classList.add("active");
+function updateCount(n){
+  document.getElementById("countPill").innerText=n+" objects";
 }
 
-function goHome(){
-  historyStack = [];
-  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
-  document.getElementById("home").classList.add("active");
+function showBack(){
+  document.getElementById("backButton").style.display="inline-block";
+}
+
+function hideBack(){
+  document.getElementById("backButton").style.display="none";
 }
 
 function poster(movie){
-  return `<div class="poster ${colourClasses[movie.id%6]}">
-    <div class="poster-country">${flags[movie.country]}</div>
+  return `
+  <div class="poster ${colourClasses[movie.id%colourClasses.length]}">
+    <div class="poster-country">${movie.country}</div>
     <div class="poster-title">${movie.title}</div>
     <div class="poster-genre">${movie.genre}</div>
   </div>`;
 }
 
-function createMovieCard(movie){
+function movieCard(movie){
   const div=document.createElement("div");
   div.className="movie";
-  div.innerHTML=`${poster(movie)}
-  <div class="movie-info">
-    <div class="movie-title">${movie.title}</div>
-    <div class="movie-meta">${movie.country}<br>${movie.language}<br>${movie.year}</div>
-  </div>`;
-  div.onclick=()=>openDetail(movie);
+  div.innerHTML=`
+    ${poster(movie)}
+    <div class="movie-info">
+      <div class="movie-title">${movie.title}</div>
+      <div class="movie-meta">${movie.language} • ${movie.year}</div>
+    </div>`;
+  div.onclick=()=>inspect(movie);
   return div;
 }
 
-function renderMovies(list,title){
-  currentList = list;
-  go("movies");
-  document.getElementById("screenTitle").innerText = title + " (" + list.length + ")";
-  const grid=document.getElementById("movieGrid");
-  grid.innerHTML="";
-  list.forEach(m=>grid.appendChild(createMovieCard(m)));
+function renderGrid(list,title,parent){
+  currentList=[...list];
+  currentParent=parent || "overview";
+
+  showBack();
+
+  document.getElementById("resultsTitle").innerText=title;
+  updateCount(list.length);
+
+  const space=document.getElementById("visualSpace");
+  space.innerHTML=`<div class="grid" id="grid"></div>`;
+
+  const grid=document.getElementById("grid");
+  list.forEach(m=>grid.appendChild(movieCard(m)));
 }
 
-function showCountry(country){ renderMovies(movieObjects.filter(m=>m.country===country), country+" Movies"); }
-function showLanguage(language){ renderMovies(movieObjects.filter(m=>m.language===language), language+" Movies"); }
-function showDecade(decade){ renderMovies(movieObjects.filter(m=>m.year>=decade && m.year<decade+10), decade+"s Movies"); }
-function showPopular(){ renderMovies([...movieObjects].sort((a,b)=>b.year-a.year).slice(0,20), "New & Popular"); }
-function showMyList(){ renderMovies(movieObjects.slice(0,15), "My List"); }
-function showAllMovies(){ renderMovies(movieObjects, "All 100 Movies"); }
+function showOverview(btn=null){
+  setActive(btn || document.querySelector(".nav-btn"));
+  hideBack();
 
-function searchCurrentMovies(value){
-  value=value.toLowerCase();
-  const filtered = currentList.filter(m =>
-    m.title.toLowerCase().includes(value) ||
-    m.country.toLowerCase().includes(value) ||
-    m.genre.toLowerCase().includes(value) ||
-    m.language.toLowerCase().includes(value)
+  heading(
+    "Collection Overview",
+    "A visual navigation system for international movie collections."
   );
-  const grid=document.getElementById("movieGrid");
-  grid.innerHTML="";
-  filtered.forEach(m=>grid.appendChild(createMovieCard(m)));
+
+  currentParent="overview";
+  currentList=[...movies];
+
+  document.getElementById("resultsTitle").innerText="All Movies";
+  updateCount(movies.length);
+
+  const space=document.getElementById("visualSpace");
+  space.innerHTML=`<div class="grid" id="grid"></div>`;
+
+  const grid=document.getElementById("grid");
+  movies.forEach(m=>grid.appendChild(movieCard(m)));
 }
 
-function openDetail(movie){
-  go("detail");
-  document.getElementById("detailPoster").innerHTML = poster(movie);
-  document.getElementById("detailTitle").innerText = movie.title;
-  document.getElementById("detailInfo").innerHTML = `
-    <b>Country:</b> ${movie.country}<br><br>
-    <b>Language:</b> ${movie.language}<br><br>
-    <b>Genre:</b> ${movie.genre}<br><br>
-    <b>Year:</b> ${movie.year}<br><br>
-    <b>Rating:</b> ${movie.rating}
-  `;
-  const related = movieObjects.filter(m => m.country===movie.country && m.id!==movie.id).slice(0,4);
-  const box=document.getElementById("relatedMovies");
-  box.innerHTML="";
-  related.forEach(r=>box.appendChild(createMovieCard(r)));
-}
+function showCategoryBoard(type,btn=null){
+  setActive(btn);
+  showBack();
 
-function buildGenreView(){
-  const genres=[...new Set(movieObjects.map(m=>m.genre.split("/")[0].split(" ")[0]))];
-  const grid=document.getElementById("genreGrid");
-  grid.innerHTML="";
-  genres.forEach(g=>{
-    const div=document.createElement("div");
-    div.className="box-btn";
-    div.innerText=g;
-    div.onclick=()=>renderMovies(movieObjects.filter(m=>m.genre.includes(g)), g+" Movies");
-    grid.appendChild(div);
+  currentParent=type;
+
+  let title="";
+  let sub="";
+  let groups=[];
+
+  if(type==="country"){
+    title="Country Navigation";
+    sub="Browse movies by country groups.";
+    groups=[...new Set(movies.map(m=>m.country))];
+  }else if(type==="language"){
+    title="Language Navigation";
+    sub="Browse movies by language groups.";
+    groups=[...new Set(movies.map(m=>m.language))];
+  }else{
+    title="Genre Navigation";
+    sub="Browse movies by genre groups.";
+    groups=[...new Set(movies.map(m=>m.genre.split("/")[0].split(" ")[0]))];
+  }
+
+  heading(title,sub);
+  document.getElementById("resultsTitle").innerText=title;
+  updateCount(groups.length);
+
+  const space=document.getElementById("visualSpace");
+  space.innerHTML=`<div class="category-board" id="board"></div>`;
+
+  const board=document.getElementById("board");
+
+  groups.forEach(g=>{
+    const list= type==="country" ? movies.filter(m=>m.country===g)
+      : type==="language" ? movies.filter(m=>m.language===g)
+      : movies.filter(m=>m.genre.includes(g));
+
+    const card=document.createElement("div");
+    card.className="category-card";
+    card.innerHTML=`<strong>${g}</strong><small>${list.length} movies</small>`;
+
+    card.onclick=()=>{
+      heading(title,sub);
+      renderGrid(list,g+" Movies",type);
+    };
+
+    board.appendChild(card);
   });
 }
 
-function buildDensityView(){
-  const box=document.getElementById("densityGrid");
-  box.innerHTML="";
-  Object.keys(flags).forEach((country,index)=>{
-    const count=movieObjects.filter(m=>m.country===country).length;
+function showTimeline(btn=null){
+  setActive(btn);
+  showBack();
+
+  currentParent="timeline";
+
+  heading(
+    "Timeline Navigation",
+    "Browse movie collections by decade."
+  );
+
+  document.getElementById("resultsTitle").innerText="Choose a Decade";
+  updateCount(6);
+
+  const decades=[1950,1970,1990,2000,2010,2020];
+
+  const space=document.getElementById("visualSpace");
+  space.innerHTML=`<div class="timeline-board" id="timelineBoard"></div>`;
+
+  const board=document.getElementById("timelineBoard");
+
+  decades.forEach(d=>{
+    const list=movies.filter(m=>m.year>=d && m.year<d+10);
+
+    const card=document.createElement("div");
+    card.className="timeline-card";
+    card.innerHTML=`<strong>${d}s</strong><small>${list.length} movies</small>`;
+
+    card.onclick=()=>{
+      heading(
+        "Timeline Navigation",
+        "Browse movie collections by decade."
+      );
+      renderGrid(list,d+" Movies","timeline");
+    };
+
+    board.appendChild(card);
+  });
+}
+
+function showDensity(btn=null){
+  setActive(btn);
+  showBack();
+
+  currentParent="density";
+
+  heading(
+    "Density View",
+    "Bubble size represents subgroup size."
+  );
+
+  const countries=[...new Set(movies.map(m=>m.country))];
+
+  document.getElementById("resultsTitle").innerText="Country Density";
+  updateCount(countries.length);
+
+  const space=document.getElementById("visualSpace");
+  space.innerHTML=`<div class="bubble-view" id="bubbleView"></div>`;
+
+  const view=document.getElementById("bubbleView");
+
+  countries.forEach((country,i)=>{
+    const count=movies.filter(m=>m.country===country).length;
+
     const bubble=document.createElement("div");
-    bubble.className="bubble "+colourClasses[index%6];
-    const size=100+count*4;
+    bubble.className="bubble "+colourClasses[i%colourClasses.length];
+
+    const size=110+(count*2);
     bubble.style.width=size+"px";
     bubble.style.height=size+"px";
-    bubble.innerHTML=`${flags[country]}<br><br>${count} Movies`;
-    bubble.onclick=()=>showCountry(country);
-    box.appendChild(bubble);
+
+    bubble.innerHTML=`${country}<br>${count} movies`;
+
+    bubble.onclick=()=>{
+      renderGrid(
+        movies.filter(m=>m.country===country),
+        country+" Movies",
+        "density"
+      );
+    };
+
+    view.appendChild(bubble);
   });
 }
 
-buildGenreView();
-buildDensityView();
+function showPopular(btn=null){
+  setActive(btn);
+  heading(
+    "New & Popular",
+    "Recently released movies in the collection."
+  );
+
+  const popular=[...movies].sort((a,b)=>b.year-a.year).slice(0,20);
+  renderGrid(popular,"New & Popular","overview");
+}
+
+function showMyList(btn=null){
+  setActive(btn);
+  heading(
+    "My List",
+    "A saved movie access collection."
+  );
+
+  renderGrid(movies.slice(0,15),"My List","overview");
+}
+
+function goBack(){
+  if(currentParent==="timeline"){
+    showTimeline();
+    return;
+  }
+
+  if(currentParent==="country"){
+    showCategoryBoard("country");
+    return;
+  }
+
+  if(currentParent==="language"){
+    showCategoryBoard("language");
+    return;
+  }
+
+  if(currentParent==="genre"){
+    showCategoryBoard("genre");
+    return;
+  }
+
+  if(currentParent==="density"){
+    showDensity();
+    return;
+  }
+
+  showOverview();
+}
+
+function inspect(movie){
+  const related=movies
+    .filter(m=>m.country===movie.country && m.id!==movie.id)
+    .slice(0,5);
+
+  document.getElementById("inspectorContent").innerHTML=`
+    <div class="detail-poster">${poster(movie)}</div>
+
+    <div class="detail-box">
+      <strong style="font-size:20px;">${movie.title}</strong>
+      <br><br>
+      <b>Country:</b> ${movie.country}<br>
+      <b>Language:</b> ${movie.language}<br>
+      <b>Genre:</b> ${movie.genre}<br>
+      <b>Year:</b> ${movie.year}
+    </div>
+
+    <h3 style="margin-top:18px;">Related Movies</h3>
+
+    <div class="related-list">
+      ${related.map(r=>`
+        <div class="related-item" onclick="inspectById(${r.id})">
+          ${r.title}
+          <br>
+          <small>${r.genre} • ${r.year}</small>
+        </div>`).join("")}
+    </div>`;
+}
+
+function inspectById(id){
+  inspect(movies.find(m=>m.id===id));
+}
+
+function searchCurrent(value){
+  const q=value.toLowerCase();
+
+  const filtered=currentList.filter(m=>
+    m.title.toLowerCase().includes(q) ||
+    m.country.toLowerCase().includes(q) ||
+    m.genre.toLowerCase().includes(q) ||
+    m.language.toLowerCase().includes(q)
+  );
+
+  const space=document.getElementById("visualSpace");
+  space.innerHTML=`<div class="grid" id="grid"></div>`;
+
+  const grid=document.getElementById("grid");
+  filtered.forEach(m=>grid.appendChild(movieCard(m)));
+
+  updateCount(filtered.length);
+}
+
+showOverview(document.querySelector(".nav-btn"));
 </script>
 
 </body>
